@@ -7,10 +7,6 @@ import { getSearchByStringExample } from "@constants/frontend";
 
 interface Props {
     soc: SOC_Generic;
-    storeHoveredElementSection: (courseID: string | null) => void;
-    forgetHoveredElementSection: () => void;
-    storeHoveredElementCourse: (courseId: string) => void;
-    forgetHoveredElementCourse: () => void;
 }
 
 export default function SectionPicker(props: Props) {
@@ -44,10 +40,6 @@ export default function SectionPicker(props: Props) {
     if (!isFetching)
         coursesToDisplay = <MultipleCourseDisplay
                                 courses={courses ?? []}
-                                storeHoveredElementSection={props.storeHoveredElementSection}
-                                forgetHoveredElementSection={props.forgetHoveredElementSection}
-                                storeHoveredElementCourse={props.storeHoveredElementCourse}
-                                forgetHoveredElementCourse={props.forgetHoveredElementCourse}
                             />;
 
     return (

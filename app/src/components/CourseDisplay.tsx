@@ -3,13 +3,22 @@ import SectionDisplay from "@components/SectionDisplay";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Draggable } from "react-drag-and-drop";
+import { storeHoveredElementSection, forgetHoveredElementSection, storeHoveredElementCourse, forgetHoveredElementCourse } from '../reducers/hoverInfoSlice.tsx'
+import { useDispatch } from 'react-redux'
+
 
 interface Props {
     course: Course;
-    storeHoveredElementSection: (courseID: string | null) => void;
-    forgetHoveredElementSection: () => void;
-    storeHoveredElementCourse: (courseID: string) => void;
-    forgetHoveredElementCourse: () => void;
+}
+// TODO: FIX TYPE
+const dispatch = useDispatch<any>();
+
+const dispatchStoreSection = (uid: string | null) => {
+    dispatch(storeHoveredElementSection(uid));
+}
+
+const dispatchForgetSection = () => {
+    dispatch(forgetHoveredElementSection());
 }
 
 export default function CourseDisplay(props: Props) {
@@ -22,8 +31,8 @@ export default function CourseDisplay(props: Props) {
         hoveredElementSectionUid={null}
         hoveredElementCourseId={null}
         handleRemove={function (): void {throw new Error("Course should not be able to be removed from course display.");}}
-        storeHoveredElementSection={props.storeHoveredElementSection}
-        forgetHoveredElementSection={props.forgetHoveredElementSection}
+        storeHoveredElementSection={dispatchStoreSection}
+        forgetHoveredElementSection={dispatchForgetSection}
         // Pass in empty functions because hovering a section on the left shouldn't affect the "course hover" status
         storeHoveredElementCourse={(_uid: string): void => {}}
         forgetHoveredElementCourse={(): void => {}}
@@ -34,7 +43,7 @@ export default function CourseDisplay(props: Props) {
             {/* COURSE INFORMATION */}
             <Draggable type={"uid"} data={props.course.uid}>
                 <div className="m-1">
-                    <div className="w-full p-2 rounded-lg shadow-sm shadow-slate-400" onMouseEnter={() => props.storeHoveredElementCourse(SOC_Generic.getCourseID(props.course.uid))} onMouseLeave={() => props.forgetHoveredElementCourse()}>
+                    <div className="w-full p-2 rounded-lg shadow-sm shadow-slate-400" onMouseEnter={() => dispatch(storeHoveredElementCourse(SOC_Generic.getCourseID(props.course.uid)))} onMouseLeave={() => dispatch(forgetHoveredElementCourse())}>
                         {/* Course Code & Name */}
                         <p className="text-slate-700 underline">
                             <b>{props.course.code}</b> {props.course.name}

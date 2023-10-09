@@ -3,10 +3,6 @@ import CourseDisplay from "@components/CourseDisplay";
 
 interface Props {
     courses: Course[];
-    storeHoveredElementSection: (courseID: string | null) => void;
-    forgetHoveredElementSection: () => void;
-    storeHoveredElementCourse: (courseId: string) => void;
-    forgetHoveredElementCourse: () => void;
 }
 
 export default function MultipleCourseDisplay(props: Props) {
@@ -14,10 +10,6 @@ export default function MultipleCourseDisplay(props: Props) {
         <CourseDisplay
             key={course.uid}
             course={course}
-            storeHoveredElementSection={props.storeHoveredElementSection}
-            forgetHoveredElementSection={props.forgetHoveredElementSection}
-            storeHoveredElementCourse={props.storeHoveredElementCourse}
-            forgetHoveredElementCourse={props.forgetHoveredElementCourse}
         />
     ));
 

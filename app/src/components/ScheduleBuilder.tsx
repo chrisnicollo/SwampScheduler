@@ -272,10 +272,6 @@ export default class ScheduleBuilder extends Component<Props, States> {
                     <div className="overflow-y-auto w-full">
                         <SectionPicker
                         soc={this.state.soc}
-                        storeHoveredElementSection={this.storeHoveredElementSection.bind(this)}
-                        forgetHoveredElementSection={this.forgetHoveredElementSection.bind(this)}
-                        storeHoveredElementCourse={this.storeHoveredElementCourse.bind(this)}
-                        forgetHoveredElementCourse={this.forgetHoveredElementCourse.bind(this)}
                         />
                     </div>
 
@@ -283,8 +279,6 @@ export default class ScheduleBuilder extends Component<Props, States> {
                     <div className="overflow-y-auto w-full p-1">
                         <MultipleSelectionDisplay
                             selections={this.state.selections}
-                            hoveredElementCourseId={this.state.hoveredElementCourseId}
-                            hoveredElementSectionUid={this.state.hoveredElementSectionUid}
                             handleDrop={this.handleDrop.bind(this)}
                             newSelection={this.newSelection.bind(this)}
                             handleRemove={this.handleRemove.bind(this)}
@@ -292,8 +286,6 @@ export default class ScheduleBuilder extends Component<Props, States> {
                                 this,
                             )}
                             key={new Date().getTime()}
-                            storeHoveredElementCourse={this.storeHoveredElementCourse.bind(this)}
-                            forgetHoveredElementCourse={this.forgetHoveredElementCourse.bind(this)}
                         />
                     </div>
 

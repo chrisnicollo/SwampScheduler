@@ -5,20 +5,38 @@ import SectionDisplay from "@components/SectionDisplay";
 import { Droppable } from "react-drag-and-drop";
 import { Selection } from "@scripts/scheduleGenerator";
 import { GrClose } from "react-icons/gr";
+import { storeHoveredElementCourse, forgetHoveredElementCourse } from '../reducers/hoverInfoSlice.tsx'
+import { useSelector, useDispatch } from 'react-redux'
 
 interface Props {
     ind: number;
     selection: Selection;
-    hoveredElementSectionUid: string | null;
-    hoveredElementCourseId: string | null;
     handleDrop: (ind: number, uid: string) => Promise<void>;
     handleRemove: (sectionToRemove: Section) => void;
     handleDeleteSelection: (ind: number) => void;
-    storeHoveredElementSection: (courseID: string | null) => void;
-    forgetHoveredElementSection: () => void;
-    storeHoveredElementCourse: (courseID: string) => void;
-    forgetHoveredElementCourse: () => void;
 }
+
+// TODO: FIX TYPE
+const dispatch = useDispatch<any>();
+
+const dispatchStoreCourse = (uid: string) => {
+    dispatch(storeHoveredElementCourse(uid));
+}
+
+const dispatchForgetCourse = () => {
+    dispatch(forgetHoveredElementCourse());
+}
+
+
+type State = {
+    hoverInfo: {
+      hoveredElementSectionUid: string | null,
+      hoveredElementCourseId: string | null,
+    }
+};
+
+const hoveredElementSectionUid = useSelector((state : State) => state.hoverInfo.hoveredElementSectionUid)
+const hoveredElementCourseId = useSelector((state : State) => state.hoverInfo.hoveredElementCourseId)
 
 export default function SelectionDisplay(props: Props) {
     const doDrop = ({ uid }: { uid: string }) => {
@@ -31,12 +49,12 @@ export default function SelectionDisplay(props: Props) {
             key={idx}
             section={section}
             handleRemove={props.handleRemove}
-            hoveredElementSectionUid={props.hoveredElementSectionUid}
-            hoveredElementCourseId={props.hoveredElementCourseId}
-            storeHoveredElementSection={props.storeHoveredElementSection}
-            forgetHoveredElementSection={props.forgetHoveredElementSection}
-            storeHoveredElementCourse={props.storeHoveredElementCourse}
-            forgetHoveredElementCourse={props.forgetHoveredElementCourse}
+            hoveredElementSectionUid={hoveredElementSectionUid}
+            hoveredElementCourseId={hoveredElementCourseId}
+            storeHoveredElementSection={(_uid: string | null): void => {}}
+            forgetHoveredElementSection={(): void => {}}
+            storeHoveredElementCourse={dispatchStoreCourse}
+            forgetHoveredElementCourse={dispatchForgetCourse}
         />
     ));
 

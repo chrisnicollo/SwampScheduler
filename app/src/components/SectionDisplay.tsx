@@ -22,13 +22,15 @@ interface Props {
 
 export default function SectionDisplay(props: Props) {
     const section = props.section;
+    // TODO: Fix this to have a parameter other than 'any'
+    
 
-    const storeHoveredElementSection = (): void => {
-        props.storeHoveredElementSection(props.section.uid)
+    const storeHoveredElementInfo = (): void => {
+        props.storeHoveredElementSection(props.section.uid);
         props.storeHoveredElementCourse(SOC_Generic.getCourseID(props.section.uid));
     }
 
-    const forgetHoveredElementSection = (): void => {
+    const forgetHoveredElementInfo = (): void => {
         props.forgetHoveredElementSection();
         props.forgetHoveredElementCourse();
     }
@@ -67,8 +69,8 @@ export default function SectionDisplay(props: Props) {
                 {/*Note that there is a white border when the section is not highlighted because otherwise the graphics will shift between having a border and not having a border, which shifts the size of the section blocks*/}
                 <div
                     className={needsHighlight() ? "w-full p-2 rounded-lg shadow-sm shadow-slate-400 bg-slate-200 border border-blue-300" : "w-full p-2 rounded-lg shadow-sm shadow-slate-400 border border-white"}
-                    onMouseEnter={() => storeHoveredElementSection()}
-                    onMouseLeave={() => forgetHoveredElementSection()}
+                    onMouseEnter={() => storeHoveredElementInfo()}
+                    onMouseLeave={() => forgetHoveredElementInfo()}
                 >
                     <div className={"text-slate-600 flex justify-between"}>
                         <div className={"flex items-center gap-1"}>
